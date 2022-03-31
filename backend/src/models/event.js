@@ -3,20 +3,24 @@ const { required } = require('nodemon/lib/config')
 const validator = require('validator')
 
 
-const Event = mongoose.model('Event', {
+const eventSchema = new mongoose.Schema({
     name: {
-    type: String,
-    required: true
+        type: String,
     },
-    
+
     date: {
-    type:  Date,
+        type: Date
+    },
+    summary: {
+        type: String,
     },
 
-    summary: {
-    type: String
+    avatar: {
+        type: Buffer
     }
-   })
+},
+)
 
+const Event = mongoose.model('Event',eventSchema )
 
    module.exports = Event
