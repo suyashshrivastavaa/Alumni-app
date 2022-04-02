@@ -1,0 +1,87 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(255, 250, 244);
+    height: 70px;
+}
+
+.wrap{
+  display: flex;
+    flex-direction: column;
+}
+
+.login {
+  position: relative;
+  top: 10px;
+  right: -350px;
+}
+
+.login button {
+  margin: 0 5px;
+}
+
+.items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style-type: none;
+    position: relative;
+    right: 85px;
+    font-size: 22px;
+    font-weight: bold;
+    top: 1px;
+    
+}
+
+.items li {
+    padding: 22px;
+}
+
+.items li:hover{
+    color: rgb(65, 151, 209);
+    cursor: pointer;
+}
+
+.logo {
+    font-size: 53px;
+    position: relative;
+    color: rgb(65, 151, 209);
+    left: 17px;
+    bottom: 45px;
+    
+}
+
+.logo span {
+    font-size: 22px;
+}
+
+
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: rgb(65, 151, 209);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 17px;
+  }
+  
+  .dropdownContent a {
+    color: rgb(255, 250, 244);;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdownContent a:hover {background-color:rgb(255, 250, 244);
+  color: black;}
+  
+  .dropdown:hover .dropdownContent {display: block;}
+  
