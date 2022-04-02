@@ -1,11 +1,17 @@
 const express = require('express')
 const Event = require('../models/event')
 const router = new express.Router()
+const multer = require('multer')
 
-router.post('/events/form', async (req, res) => {
+ const upload = multer({ dest: 'uploads/' })
+
+
+router.post('/events/form',upload.single('avatar'), async (req, res) => {
 
     const event = new Event(req.body)
-    console.log(req.body)
+
+     console.log(req.body)
+     console.log(req.file)
 
      try {
          await event.save()
@@ -14,9 +20,8 @@ router.post('/events/form', async (req, res) => {
          res.status(400).send(e)
          console.log(e)
      }
-
-    
 })
+    
 
 router.get('/events/', async (req, res) => {
 
