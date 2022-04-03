@@ -6,55 +6,64 @@ import { useRef } from 'react';
 
 const EventForm = (props) => {
 
-    const titleRef = useRef('');
-    const dateRef = useRef('');
-    const summaryRef = useRef('');
-
-
-     
-      
+    
 
       async function addEventHandler(e) {
 
         e.preventDefault();
 
 
-        const event = {
-          name: titleRef.current.value,
-          date: dateRef.current.value,
-          summary: summaryRef.current.value
-        };
+        let myForm = document.getElementById('myForm');
+        let formData = new FormData(myForm);
 
+        for (var value of formData.values()) {
+          console.log(value);
+       }
         const response = await fetch('http://localhost:3000/events/form', {
           method: 'POST',
-          body: JSON.stringify(event),
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': "multipart/form-data",
-
-
-          }
+          body: formData,
+          
         });
+
         const data = await response.json();
     
-      }
-      
-    
+      } 
+
+
+
+
+
+
+
       return (
        <>
-       <form onSubmit={addEventHandler} encType="multipart/form-data">
-       <label htmlFor="title">Event name</label><br></br>
-  <input type="text" id="title" ref={titleRef} ></input><br></br>
+       <form id = "myForm" onSubmit={addEventHandler}>
+         
+         <div>
+           <label htmlFor="title">Event name</label><br></br>
+           <input name = "name" type="text" id="title"  ></input><br></br>
+         </div>
+            
+          <div>
+            <label htmlFor="date">Event Date</label><br></br>
+            <input name="date" type="date" id="date"  ></input><br></br>
+          </div>
 
-  <label htmlFor="date">Event Date</label><br></br>
-  <input type="date" id="date" ref={dateRef} ></input><br></br>
+          <div>
+            <label htmlFor="summary">Event Summary</label><br></br>
+            <textarea name="summary" rows='5' id='summary' ></textarea>
+          </div>
 
-  <label htmlFor="summary">Event Summary</label><br></br>
-  <textarea rows='5' id='summary' ref={summaryRef}></textarea>
+          <div>
+            <label htmlFor="img">Associated image</label> <br></br>
+  <input name = "image" type="file" id="img" ></input>
+          </div>
+       
 
-  <label htmlFor="img">Associated image</label> <br></br>
-  <input type="file" id="img"  name="avatar"></input>
+  
 
+
+  
   <br></br>
 
   <button>Add Event</button>

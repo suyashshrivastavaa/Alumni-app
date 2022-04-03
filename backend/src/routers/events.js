@@ -6,7 +6,7 @@ const multer = require('multer')
  const upload = multer({ dest: 'uploads/' })
 
 
-router.post('/events/form',upload.single('avatar'), async (req, res) => {
+router.post('/events/form',upload.single('image'), async (req, res) => {
 
     const event = new Event(req.body)
 
