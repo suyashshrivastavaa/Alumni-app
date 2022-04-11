@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 
 const userSchema = new mongoose.Schema({
@@ -24,32 +25,74 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 7,
         trim: true,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error('Password cannot contain "password"')
-            }
         }
-    },
-    age: {
+    ,
+    graduation_year: {
         type: Number,
-        default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error('Age must be a postive number')
-            }
-        }
+        required: true,
+        
     },
-   
-    avatar: {
-        type: Buffer
-    }
+    branch: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: Number,
+        required: true,
+    },
+    residency: {
+        type: String,
+        required: true,
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
+    
 },
 {
     timestamps: true
 })
 
+
+/* userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+   })
+    */
+
+//Deleting important details
+userSchema.methods.toJSON = function (){
+    const user = this
+
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.phone
+    delete userObject.residency
+
+   
+
+    return userObject
+}
+
+
+// Authentication token 
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
+
+    user.tokens = user.tokens.concat({ token })
+    await user.save()
+
+    return token
+}
+
+// Login
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
@@ -66,7 +109,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-
+// Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
 

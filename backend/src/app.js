@@ -4,6 +4,9 @@ const eventRouter = require('./routers/events')
 const cors=require("cors");
 const bodyParser = require("body-parser")
 const userRouter = require('./routers/user')
+const referallRouter = require('./routers/opportunities/referral')
+const internRouter = require('./routers/opportunities/internship')
+const contactRouter = require('./routers/contact')
 
 const app = express()
 
@@ -21,6 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(eventRouter)
 app.use(userRouter)
+app.use(referallRouter)
+app.use(internRouter)
+app.use(contactRouter)
 
 
 module.exports = app
